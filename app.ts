@@ -1,34 +1,18 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
-import { getRandom } from './Utility/getRandomNum';
-import { GetMultiples } from "./Utility/CalcMultiple";
-import { log } from 'console';
+import { router } from "./controllers/router";
 
-
-const app = express()
+const app: express.Application = express();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get('/machine', (req: Request, res: Response) => {
-
-    let arr: Array<number> = []
-
-    for (let i = 0; i < 9; i++) {
-        arr[i] = getRandom(0, 9)
-    }
-
-    console.log(arr);
-    console.log(GetMultiples(arr));
+// app.use(AuthMiddleware);// ! 全域使用  middleware example
 
 
-    try {
-        res.json({ BoardNum: arr })
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+for (const route of router) {
+    app.use(route.getPrefix(), route.getRouter());
+}
 
 const port: number = 3000;
 

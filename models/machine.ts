@@ -7,8 +7,14 @@ export interface IMachine extends Document {
 }
 
 const machineSchema: Schema = new Schema({
-    id: { type: String, required: true },
-    boardNum: { type: [Number], required: true }
+    id: {
+        type: String,
+        required: true
+    },
+    boardNum: {
+        type: [Number],
+        required: true
+    }
 })
 
 const Machine = mongoose.model<IMachine>('Machine', machineSchema);

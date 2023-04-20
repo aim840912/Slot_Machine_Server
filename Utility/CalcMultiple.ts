@@ -24,11 +24,7 @@ export function GetMultiples(board: number[]): number {
         return multiple;
     }
     _eachLineIndexList.forEach(element => {
-
-
         var line: Array<Odds> = [element.length];
-
-
         for (var i = 0; i < element.length; i++) {
             line[i] = oddsArr[element[i]];
         }
@@ -54,7 +50,7 @@ function CalcAllTheSame(thing: Odds[]): number {
     var numCount = 0;
 
     thing.forEach(element => {
-        if (element === thing[0]) {
+        if (element == thing[0]) {
             numCount++
         }
     });
