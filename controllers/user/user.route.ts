@@ -14,9 +14,9 @@ class UserRoute extends Route {
     }
 
     protected setRoutes() {
-        this.router.get('/signup', this.userController.signup);
-        this.router.get('/login', this.userController.login);
-        this.router.get('/updatePlayer', this.userController.updatePlayer);
+        this.router.post('/signup', this.userController.signup);
+        this.router.post('/login', this.userController.login);
+        this.router.patch('/updatePlayer', this.userController.updatePlayer);
         // this.router.get('/login', AuthMiddleware, this.authController.echo);
         // this.router.post('/updatePlayer', loginRequest, this.authController.echo);
     }

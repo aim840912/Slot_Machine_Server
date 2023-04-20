@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
 import { router } from "./controllers/router";
+import 'dotenv/config'
 
 const app: express.Application = express();
 
@@ -16,6 +18,15 @@ for (const route of router) {
 
 const port: number = 3000;
 
-app.listen(port, function () {
-    console.log("Listening on " + port);
-});
+// 在變數後使用驚嘆號，是告訴 TypeScript 説這個變出不會是 null 或 undefined，
+// 要記得這是一個 "assertion"，和 as 是一樣的意思。
+mongoose
+    .connect(process.env.DB_CONNECT!).then(() => {
+        console.log('connect to mongo altas')
+    })
+    .then(() => {
+        app.listen(port);
+    })
+    .catch(err => {
+        console.log(err);
+    });

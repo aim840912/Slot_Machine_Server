@@ -5,13 +5,12 @@ import User from '../../models/user';
 class UserController {
     signup = async (req: Request, res: Response, next: NextFunction) => {
 
-        console.log(req);
         console.log("into signup router")
-        const { name, account, password } = req.body;
+        const { name, email, password } = req.body;
 
         let existingUser;
         try {
-            existingUser = await User.findOne({ account: account });
+            existingUser = await User.findOne({ email: email });
         } catch (err) {
             console.log(err);
             return next(err);
@@ -29,7 +28,7 @@ class UserController {
 
         const createdUser = new User({
             name,
-            account,
+            email,
             money: 10000,
             password: hashedPassword,
         });
@@ -45,18 +44,18 @@ class UserController {
 
     login = async (req: Request, res: Response, next: NextFunction) => {
         console.log("into login router")
-        const { account, password } = req.body;
+        const { email, password } = req.body;
 
         let existingUser: any;
 
         try {
-            existingUser = await User.findOne({ account: account });
+            existingUser = await User.findOne({ email });
         } catch (err) {
             console.log(err);
         }
 
         if (!existingUser) {
-            console.log("!existingUser");
+            return console.log("!existingUser");
         }
 
         let isValidPassword = false;
@@ -64,27 +63,25 @@ class UserController {
         try {
             isValidPassword = await bcrypt.compare(password, existingUser.password);
         } catch (err) {
-            console.log(
-                "Could not log you in, please check your credentials and try again."
-            );
+            console.log(err)
+            console.log("Could not log you in, please check your credentials and try again.");
         }
 
         if (!isValidPassword) {
             console.log("Invalid credentials, could not log you in.")
         }
 
-
-        res.json({ userId: existingUser.name, account: existingUser.account, money: existingUser.money });
+        res.json({ userId: existingUser._id, name: existingUser.name, money: existingUser.money });
     };
 
     updatePlayer = async (req: Request, res: Response, next: NextFunction) => {
         console.log("into update router")
-        const { account, money } = req.body;
-        console.log(account)
+        const { userId, money } = req.body;
+        console.log(userId)
         console.log(money)
         let existingUser: any;
         try {
-            existingUser = await User.findOne({ account: account });
+            existingUser = await User.findOne({ userId });
         } catch (err) {
             console.log("cant find the user")
             return next(err);
@@ -97,7 +94,6 @@ class UserController {
 
             return next(err);
         }
-
         res.json({});
     };
 }

@@ -1422,6 +1422,11 @@
   "resolved" "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
   "version" "0.0.3"
 
+"ts-dotenv@^0.9.1":
+  "integrity" "sha512-oTTXmjSMkCIK8d+uKbQnHh7JS9zEYGn3pq7nE0qHVERq+6Mx9wZKcXVAT+7X0qhOWpRz10dqrJCFFcKwunYz5w=="
+  "resolved" "https://registry.npmjs.org/ts-dotenv/-/ts-dotenv-0.9.1.tgz"
+  "version" "0.9.1"
+
 "ts-node@^10.9.1":
   "integrity" "sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw=="
   "resolved" "https://registry.npmjs.org/ts-node/-/ts-node-10.9.1.tgz"

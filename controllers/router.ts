@@ -6,6 +6,6 @@ import MachineRoute from "./machine/machine.route"
 
 export const router: Array<Route> = [
     // new AuthRoute(),
-    // new UserRoute(),
+    new UserRoute(),
     new MachineRoute(),
 ];
