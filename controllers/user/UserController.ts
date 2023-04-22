@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from 'bcrypt';
 import User from '../../models/user';
+import MachineController from "../machine/machineController";
+import { GenerateRandomNum } from '../../Utility/GenerateRandomNum';
+import { GetMultiples } from "../../Utility/CalcMultiple";
 
 class UserController {
     signup = async (req: Request, res: Response, next: NextFunction) => {
@@ -49,13 +52,15 @@ class UserController {
         let existingUser: any;
 
         try {
-            existingUser = await User.findOne({ email });
+            existingUser = await User.findOne({ email: email });
         } catch (err) {
             console.log(err);
         }
 
         if (!existingUser) {
-            return console.log("!existingUser");
+            console.log("!existingUser");
+            return res.status(400).json({ message: "Can't find User" });
+
         }
 
         let isValidPassword = false;
@@ -64,37 +69,53 @@ class UserController {
             isValidPassword = await bcrypt.compare(password, existingUser.password);
         } catch (err) {
             console.log(err)
-            console.log("Could not log you in, please check your credentials and try again.");
         }
 
         if (!isValidPassword) {
             console.log("Invalid credentials, could not log you in.")
+            return res.status(400).send("Wrong Password");
         }
 
         res.json({ userId: existingUser._id, name: existingUser.name, money: existingUser.money });
     };
 
     updatePlayer = async (req: Request, res: Response, next: NextFunction) => {
-        console.log("into update router")
-        const { userId, money } = req.body;
+
+        const { userId, InputValue: inputValue } = req.body;
+
         console.log(userId)
-        console.log(money)
+        console.log(inputValue)
+
+        let arr: Array<number> = [9]
+        let winMoney: number = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+            arr[i] = GenerateRandomNum(0, 9)
+        }
+
+        winMoney += inputValue * GetMultiples(arr)
+
         let existingUser: any;
+
         try {
             existingUser = await User.findOne({ userId });
-        } catch (err) {
+        }
+        catch (err) {
             console.log("cant find the user")
             return next(err);
         }
-        existingUser.money = money;
+
+        existingUser.money += winMoney;
+
         try {
             await existingUser.save();
-        } catch (err) {
+        }
+        catch (err) {
             console.log("cant save the user")
 
             return next(err);
         }
-        res.json({});
+        res.json({ winMoney, arr, money: existingUser.money });
     };
 }
 
