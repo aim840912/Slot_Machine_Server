@@ -76,7 +76,7 @@ class UserController {
             return res.status(400).send("Wrong Password");
         }
 
-        res.json({ userId: existingUser._id, name: existingUser.name, money: existingUser.money });
+        res.json({ UserId: existingUser._id, Name: existingUser.name, Money: existingUser.money });
     };
 
     updatePlayer = async (req: Request, res: Response, next: NextFunction) => {

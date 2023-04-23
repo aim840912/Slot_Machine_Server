@@ -12,7 +12,6 @@ class MachineRoute extends Route {
     }
 
     protected setRoutes() {
-        this.router.get('/', this.machineController.GetNumber);
         this.router.post('/spinAction', this.machineController.SpinAction);
     }
 }
