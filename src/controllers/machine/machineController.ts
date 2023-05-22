@@ -7,15 +7,15 @@ class MachineController {
     SpinAction = async (req: Request, res: Response, next: NextFunction) => {
         const { userId: userId, InputValue: inputValue } = req.body;
 
-        let arr: Array<number> = [9]
+        let boardNum: Array<number> = [9]
         let winMoney: number = 0;
         let hasGetData: boolean = false;
 
         for (let i = 0; i < 9; i++) {
-            arr[i] = GenerateRandomNum(0, 9)
+            boardNum[i] = GenerateRandomNum(0, 9)
         }
 
-        winMoney = inputValue * GetMultiples(arr) / 8 - inputValue;
+        winMoney = inputValue * GetMultiples(boardNum) / 8 - inputValue;
 
         let existingUser: any;
 
@@ -37,9 +37,9 @@ class MachineController {
         }
 
         hasGetData = true;
-        console.log("arr :" + arr);
+        console.log("arr :" + boardNum);
 
-        res.status(200).json({ WinMoney: winMoney, Arr: arr, Money: existingUser.money, HasGetData: hasGetData });
+        res.status(200).json({ WinMoney: winMoney, BoardNum: boardNum, Money: existingUser.money, HasGetData: hasGetData });
     }
 }
 

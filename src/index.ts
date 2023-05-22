@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
-import { router } from "./controllers/router";
+import { router } from './controllers/router';
+
 import 'dotenv/config'
 
 const app: express.Application = express();
@@ -22,10 +23,10 @@ const port: number = 3000;
 // 要記得這是一個 "assertion"，和 as 是一樣的意思。
 mongoose
     .connect(process.env.DB_CONNECT!).then(() => {
-        console.log('connect to mongo altas')
+        console.log('connect to mongo Altas')
     })
     .then(() => {
-        app.listen(port);
+        app.listen(process.env.PORT || port);
     })
     .catch(err => {
         console.log(err);

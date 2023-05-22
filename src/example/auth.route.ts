@@ -2,7 +2,7 @@
 import AuthController from "./AuthController"
 import Route from "../controllers/route";
 import { AuthMiddleware } from '../middleware/AuthMiddleware'
-import { loginRequest } from "../example/AuthRequest";
+import { loginRequest } from "./AuthRequest";
 
 class AuthRoute extends Route {
     private authController = new AuthController();
